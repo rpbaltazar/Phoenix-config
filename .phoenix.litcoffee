@@ -45,11 +45,11 @@ We'll use a 20 second alert to show debug messages, +1 for a Phoenix REPL!
 
 ## Application config
 
-    EDITOR       = "Emacs"
+    EDITOR       = "MacVim"
     BROWSER      = "Google Chrome"
     TERMINAL     = "iTerm"
     FINDER       = "Finder"
-    MUSIC        = "iTunes"
+    MUSIC        = "Spotify"
     VIDEO        = "MPlayerX"
 
 ## Layout config
