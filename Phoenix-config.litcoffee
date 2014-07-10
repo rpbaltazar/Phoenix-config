@@ -53,11 +53,11 @@ couple of command line tools installed, right?)
 
 ## Application config
 
-    EDITOR       = "Emacs"
+    EDITOR       = "MacVim"
     BROWSER      = "Google Chrome"
     TERMINAL     = "iTerm"
     FINDER       = "Finder"
-    MUSIC        = "iTunes"
+    MUSIC        = "Spotify"
     VIDEO        = "MPlayerX"
 
 ## Layout config
