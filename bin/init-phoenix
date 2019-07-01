@@ -1,0 +1,15 @@
+#!/bin/bash
+
+FILE=~/.phoenix.js
+PROJECT_DIR=`pwd`
+
+echo $PROJECT_DIR
+
+if [ -f $FILE ] || [ -L $FILE ]; then
+  echo "$FILE exists. Backing up old file first."
+  cp $FILE "${FILE}.bak"
+  rm $FILE
+fi
+
+echo "Creating symlink"
+ln -s "${PROJECT_DIR}/phoenix.js" $FILE
