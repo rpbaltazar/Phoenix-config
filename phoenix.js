@@ -373,7 +373,7 @@
   };
 
   App.allWithName = function(name) {
-    return _.filter(App.runningApps(), function(app) {
+    return _.filter(App.all(), function (app) {
       return app.name() === name;
     });
   };
@@ -412,7 +412,6 @@
 
   bindKey = function(key, description, modifier, fn) {
     return keyBindings[description] = Key.on(key, modifier, fn);
-    // return keys.push(Phoenix.bind(key, modifier, fn));
   };
 
   mash = 'cmd-alt-ctrl'.split('-');
