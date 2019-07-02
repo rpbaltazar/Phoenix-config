@@ -10,18 +10,14 @@
 
   var debug = function(o, label) {
     if (label == null) {
-      label = "obj: ";
+      label = "obj";
     }
-    Phoenix.log(label);
-    return Phoenix.log(JSON.stringify(o));
+    return Phoenix.log(label + ": " + JSON.stringify(o));
   };
 
   MARGIN_X = 3;
-
   MARGIN_Y = 3;
-
   GRID_WIDTH = 20;
-
   GRID_HEIGHT = 16;
 
   _.mixin({
@@ -79,12 +75,13 @@
   };
 
   Window.prototype.setGrid = function(grid, screen) {
-    var gridHeight, gridWidth;
-    gridWidth = this.screenRect().width / GRID_WIDTH;
-    gridHeight = this.screenRect().height / GRID_HEIGHT;
+    var gridHeight, gridWidth, screenRect;
+    screenRect = screen.flippedVisibleFrame();
+    gridWidth = screenRect.width / GRID_WIDTH;
+    gridHeight = screenRect.height / GRID_HEIGHT;
     return this.setFrame({
-      y: ((grid.y * gridHeight) + this.screenRect().y) + MARGIN_Y,
-      x: ((grid.x * gridWidth) + this.screenRect().x) + MARGIN_X,
+      y: ((grid.y * gridHeight) + screenRect.y) + MARGIN_Y,
+      x: ((grid.x * gridWidth) + screenRect.x) + MARGIN_X,
       width: (grid.width * gridWidth) - (MARGIN_X * 2.0),
       height: (grid.height * gridHeight) - (MARGIN_Y * 2.0)
     });
@@ -256,17 +253,29 @@
     });
   };
 
-  Screen.prototype.previousScreen = function() {
-    var allScreens = Screen.all();
-    var currentScreen = Screen.main();
+  var getAllScreens = function() {
+    return Screen.all();
+  }
+
+  var getCurrentScreenIndex = function(allScreens, currentScreen) {
     if (allScreens.length == 1) {
       Phoenix.notify("No more screens available");
+      return -1;
+    }
+
+    return _.findIndex(allScreens, function (screen) {
+      return screen.identifier() == currentScreen.identifier()
+    });
+  }
+
+  var getPreviousScreen = function(currentScreen) {
+    var allScreens = getAllScreens();
+    var currentScreenIndex = getCurrentScreenIndex(allScreens, currentScreen);
+
+    if (currentScreenIndex == -1) {
       return currentScreen;
     }
 
-    var currentScreenIndex = _.findIndex(allScreens, function(screen) {
-      return screen.identifier() == currentScreen.identifier()
-    });
     var idx = currentScreenIndex - 1;
     if (idx < 0) {
       idx = allScreens.length - 1;
@@ -274,18 +283,15 @@
     return allScreens[idx];
   }
 
-  Screen.prototype.nextScreen = function() {
-    var allScreens = Screen.all();
-    var currentScreen = Screen.main();
-    if (allScreens.length == 1) {
-      Phoenix.notify("No more screens available");
+  var getNextScreen = function(currentScreen) {
+    var allScreens = getAllScreens();
+    var currentScreenIndex = getCurrentScreenIndex(allScreens, currentScreen);
+
+    if (currentScreenIndex == -1) {
       return currentScreen;
     }
 
-    var currentScreenIndex = _.findIndex(allScreens, function(screen) {
-      return screen.identifier() == currentScreen.identifier()
-    });
-    var idx = currentScreenIndex - 1;
+    var idx = currentScreenIndex + 1;
     if (idx > allScreens.length - 1) {
       idx = 0;
     }
@@ -297,11 +303,13 @@
   }
 
   var moveWindowToNextScreen = function() {
-    return focused().setGrid(focused().getGrid(), focused().screen().nextScreen());
+    var nextScreen = getNextScreen(focused().screen());
+    return focused().setGrid(focused().getGrid(), nextScreen);
   };
 
   var moveWindowToPreviousScreen = function() {
-    return focused().setGrid(focused().getGrid(), focused().screen().previousScreen());
+    var nextScreen = getPreviousScreen(focused().screen());
+    return focused().setGrid(focused().getGrid(), nextScreen);
   };
 
   windowLeftOneColumn = function() {
