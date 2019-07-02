@@ -26,10 +26,6 @@
     }
   });
 
-  var windows = function() {
-    return Window.visibleWindows();
-  };
-
   Window.prototype.screenRect = function() {
     return this.screen().flippedVisibleFrame();
   };
@@ -425,39 +421,39 @@
   mash = 'cmd-alt-ctrl'.split('-');
 
   bindKey('up', 'To Top Half', mash, function() {
-    return Window.focused().toTopHalf();
+    return focused().toTopHalf();
   });
 
   bindKey('down', 'To Bottom Half', mash, function() {
-    return Window.focused().toBottomHalf();
+    return focused().toBottomHalf();
   });
 
   bindKey('left', 'To Left Half', mash, function() {
-    return Window.focused().toLeftHalf();
+    return focused().toLeftHalf();
   });
 
   bindKey('right', 'To Right Half', mash, function() {
-    return Window.focused().toRightHalf();
+    return focused().toRightHalf();
   });
 
   bindKey('Q', 'Top Left', mash, function() {
-    return Window.focused().toTopLeft();
+    return focused().toTopLeft();
   });
 
   bindKey('A', 'Bottom Left', mash, function() {
-    return Window.focused().toBottomLeft();
+    return focused().toBottomLeft();
   });
 
   bindKey('W', 'Top Right', mash, function() {
-    return Window.focused().toTopRight();
+    return focused().toTopRight();
   });
 
   bindKey('S', 'Bottom Right', mash, function() {
-    return Window.focused().toBottomRight();
+    return focused().toBottomRight();
   });
 
   bindKey('space', 'Maximize Window', mash, function() {
-    return Window.focused().toFullScreen();
+    return focused().toFullScreen();
   });
 
   ITERM = "iTerm2";
@@ -499,11 +495,11 @@
   });
 
   bindKey(';', 'Snap focused to grid', mash, function() {
-    return Window.focused().snapToGrid();
+    return focused().snapToGrid();
   });
 
   bindKey("'", 'Snap all to grid', mash, function() {
-    return visible().map(function(win) {
+    return Window.all({"visible": true}).map(function(win) {
       return win.snapToGrid();
     });
   });
