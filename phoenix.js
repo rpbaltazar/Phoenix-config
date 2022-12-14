@@ -436,19 +436,19 @@
     return focused().toRightHalf();
   });
 
-  bindKey('Q', 'Top Left', mash, function() {
+  bindKey('Y', 'Top Left', mash, function() {
     return focused().toTopLeft();
   });
 
-  bindKey('A', 'Bottom Left', mash, function() {
+  bindKey('N', 'Bottom Left', mash, function() {
     return focused().toBottomLeft();
   });
 
-  bindKey('W', 'Top Right', mash, function() {
+  bindKey('P', 'Top Right', mash, function() {
     return focused().toTopRight();
   });
 
-  bindKey('S', 'Bottom Right', mash, function() {
+  bindKey('/', 'Bottom Right', mash, function() {
     return focused().toBottomRight();
   });
 
@@ -470,11 +470,11 @@
     return App.focusOrStart(FINDER);
   });
 
-  bindKey('N', 'To Next Screen', mash, function() {
+  bindKey('0', 'To Next Screen', mash, function() {
     return moveWindowToNextScreen();
   });
 
-  bindKey('P', 'To Previous Screen', mash, function() {
+  bindKey('6', 'To Previous Screen', mash, function() {
     return moveWindowToPreviousScreen();
   });
 
